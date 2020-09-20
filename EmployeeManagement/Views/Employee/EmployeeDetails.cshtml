@@ -1,0 +1,99 @@
+﻿@model EmployeeManagement.Models.EmployeeModel
+
+<h1>Employee Info</h1>
+
+@if (TempData["Message"] != null)
+{
+    <p style="background : powderblue">@TempData["Message"]</p>
+}
+
+<hr />
+<div class="tab-content">
+    <form asp-controller="Employee" asp-action="AddEmployeeDetails" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="@Model.EmployeeId" />
+        <div class="form-row">
+            <div class="form-group col-xs-10 col-sm-6">
+                <label asp-for="Firstname" class="control-label"></label>
+                <input asp-for="Firstname" class="form-control" />
+                <span asp-validation-for="Firstname" class="text-danger"></span>
+            </div>
+            <div class="form-group col-xs-10 col-sm-6">
+                <label asp-for="Lastname" class="control-label"></label>
+                <input asp-for="Lastname" class="form-control" />
+                <span asp-validation-for="Lastname" class="text-danger"></span>
+            </div>
+            <div class="form-group col-xs-10 col-sm-6">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group col-xs-10 col-sm-6">
+                <label asp-for="Dob" class="control-label"></label>
+                <input asp-for="Dob" class="form-control" />
+                <span asp-validation-for="Dob" class="text-danger"></span>
+            </div>
+            <div class="form-group col-xs-10 col-sm-6">
+                <label asp-for="JoiningDate" class="control-label"></label>
+                <input asp-for="JoiningDate" class="form-control" />
+                <span asp-validation-for="JoiningDate" class="text-danger"></span>
+            </div>
+            <div class="form-group col-xs-10 col-sm-6">
+                <label asp-for="Gender" class="control-label"></label>
+                <select asp-for="Gender" class="form-control">
+                    <option value="">Select Gender</option>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group col-xs-10 col-sm-12">
+                <label asp-for="RoleDetails" class="control-label Space"></label>
+                @if (@Model.RoleDetails != null)
+                {
+                    @foreach (var item in Model.RoleDetails)
+                    {
+                        <input asp-for="SelectedRoleId" type="radio" value="@item.Id" class="text-danger" /> @item.RoleName
+                    }
+                }
+                <br />
+                <span asp-validation-for="SelectedRoleId" class="field-validation-valid text-danger"></span>
+            </div>
+            <div class="form-group col-xs-10 col-sm-12">
+                <label asp-for="SkillDetails" class="control-label Space"></label>
+                @if (@Model.SkillDetails != null)
+                {
+                    @for (var i = 0; i < Model.SkillDetails.Count; i++)
+                    {
+                        <input type="checkbox" asp-for="@Model.SkillDetails[i].Selected" class="text-danger" />
+                        <label asp-for="@Model.SkillDetails[i].Selected" class="control-label">@Model.SkillDetails[i].SkillsName</label>
+                        <input type="hidden" asp-for="@Model.SkillDetails[i].SkillsName" />
+                    }
+                }
+                <br />
+                <span asp-validation-for="SkillDetails" class="field-validation-valid text-danger"></span>
+            </div>
+            <div class="form-group col-xs-10 col-sm-6">
+                <label asp-for="HobbyDetails" class="control-label Space"></label>
+                <select asp-for="SelectedHobbyId" asp-items="@Model.HobbyDetails" class="form-control">
+                    <option value="">Select Hobbies</option>
+                </select>
+                <span asp-validation-for="SelectedHobbyId" class="text-danger"></span>
+            </div>
+            <div class="form-group col-xs-10 col-sm-12">
+                <label asp-for="About" class="control-label"></label>
+                <input asp-for="About" class="form-control" />
+                <span asp-validation-for="About" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-xs-10 col-sm-6">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
